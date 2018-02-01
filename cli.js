@@ -12,4 +12,12 @@ if (arg === '-v' || arg === '--version') {
   return;
 }
 
-require(path.resolve(arg));
+try {
+  require(path.resolve(arg));
+} catch (e) {
+  if (e.message === 'Cannot find module \'flow-runtime\'') {
+    console.error('Missing flow-runtime. Run `npm install flow-runtime`');
+    return;
+  }
+  throw e;
+}

@@ -9,7 +9,10 @@ var babelPluginTransformObjectRestSpread = [require('babel-plugin-transform-obje
 var babelPluginDecorators = [require('babel-plugin-transform-decorators')];
 var babelPluginFlowRuntime = [require('babel-plugin-flow-runtime').default];
 
+const enableFlowRuntime = process.env.ENABLE_FLOW_RUNTIME;
+
 require('babel-register')({
   presets: [babelPresetEnv, babelPresetFlow],
-  plugins: [babelPluginTransformObjectRestSpread, babelPluginDecorators, babelPluginFlowRuntime]
+  plugins: [babelPluginTransformObjectRestSpread, babelPluginDecorators]
+    .concat(enableFlowRuntime ? [babelPluginFlowRuntime] : [])
 });
