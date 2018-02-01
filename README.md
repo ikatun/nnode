@@ -14,9 +14,11 @@ console.log(`Awww, this is ${very} nice.`);
 ```
 
 If you try running `node run-me.js`
+
 -- `SyntaxError: Unexpected token import`
 
 That's not very nice, try something nicer, like `nnode run-me.js`:
+
 -- `Awww, this is really nice.`
 
 You can also `require('nnode')` which works just [require('babel-register')](https://babeljs.io/docs/usage/babel-register) without needing to setup .babelrc and installing babel presets, plugins and other non-niceties.
