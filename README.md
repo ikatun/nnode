@@ -5,6 +5,16 @@ So nice, you'd meet it with your parents.
 
 It works just ike `node`, only `n`icer.
 
+For using the `nnode` cli, install the package globally:
+```
+npm install -g nnode
+```
+
+When using the `nnode` package as `require('nnode')`, install the package as a dependency:
+```
+npm install nnode --save
+```
+
 `run-me.js`
 ```
 import path from 'path';
