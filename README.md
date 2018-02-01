@@ -8,17 +8,21 @@ It works just ike `node`, only `n`icer.
 `run-me.js`
 ```
 import path from 'path';
-const x = { look: 'at', me: 'please' };
-const { look, me } = x;
-console.log(`I'm ${at}ing at you`);
+const x = { this: 'this', very: 'really' };
+const { very } = x;
+console.log(`Awww, this is ${very} nice.`);
 ```
 
 If you try running `node run-me.js`
 -- `SyntaxError: Unexpected token import`
 
 That's not very nice, try something nicer, like `nnode run-me.js`:
--- `Look at please`
+-- `Awww, this is really nice.`
 
 You can also `require('nnode')` which works just [require('babel-register')](https://babeljs.io/docs/usage/babel-register) without needing to setup .babelrc and installing babel presets, plugins and other non-niceties.
 Useful when running stuff with `pm2` or `nodemon`.
 
+Included with `nnode` are:
+- babel-preset-env
+- babel-preset-flow
+- babel-plugin-transform-object-rest-spread
