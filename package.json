@@ -1,0 +1,18 @@
+{
+  "name": "nnode",
+  "version": "0.0.1",
+  "description": "",
+  "bin": {
+    "nnode": "./cli.js"
+  },
+  "main": "./index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-register": "6.26.0"
+  }
+}
