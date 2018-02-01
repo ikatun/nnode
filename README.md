@@ -38,3 +38,4 @@ Included with `nnode` are:
 - babel-preset-env
 - babel-preset-flow
 - babel-plugin-transform-object-rest-spread
+- babel-plugin-transform-decorators

@@ -6,8 +6,9 @@ var babelPresetEnv = [
 ];
 var babelPresetFlow = [require('babel-preset-flow')];
 var babelPluginTransformObjectRestSpread = [require('babel-plugin-transform-object-rest-spread')];
+var babelPluginDecorators = [require('babel-plugin-transform-decorators')];
 
 require('babel-register')({
   presets: [babelPresetEnv, babelPresetFlow],
-  plugins: [babelPluginTransformObjectRestSpread]
+  plugins: [babelPluginTransformObjectRestSpread, babelPluginDecorators]
 });
