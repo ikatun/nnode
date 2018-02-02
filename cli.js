@@ -13,6 +13,7 @@ if (arg === '-v' || arg === '--version') {
 }
 
 try {
+  process.argv.shift();
   require(path.resolve(arg));
 } catch (e) {
   if (e.message === 'Cannot find module \'flow-runtime\'') {
