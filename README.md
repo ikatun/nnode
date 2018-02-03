@@ -38,5 +38,5 @@ Included with `nnode` are:
 - babel-preset-env
 - babel-preset-flow
 - babel-plugin-transform-object-rest-spread
-- babel-plugin-transform-decorators
+- babel-plugin-transform-decorators-legacy
 - babel-plugin-flow-runtime (Only if environmental variable ENABLE_FLOW_RUNTIME is true)
