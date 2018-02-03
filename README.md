@@ -1,5 +1,5 @@
 # nnode - a nicer node
-So nice, you'd meet it with your parents.
+So nice, you'd introduce it to your parents.
 
 `nnode` executes .js files with node + babel.
 
