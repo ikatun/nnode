@@ -36,7 +36,7 @@ Useful when running stuff with `pm2` or `nodemon`.
 
 #### The `Why not babel-node` section:
 - babel-node requires babel presets, plugins and .babelrc file to be present in the local project
-- you don't want to keep finding and installing them one by one every time just to run something
+- you don't want to keep finding and installing them one by one every time you want to run something
 - sometimes, a combination of plugins and presets or their versions just doesn't work
 - this is why nnode depends on them by the exact patch version
 
