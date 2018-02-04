@@ -34,13 +34,13 @@ That's not very nice, try something nicer, like `nnode run-me.js`:
 You can also `require('nnode')` which works just like [require('babel-register')](https://babeljs.io/docs/usage/babel-register) without needing to setup .babelrc and installing babel presets, plugins and other non-niceties.
 Useful when running stuff with `pm2` or `nodemon`.
 
-The `Why not babel-node` section:
+#### The `Why not babel-node` section:
 - babel-node requires babel presets, plugins and .babelrc file to be present in the local project
 - you don't want to keep finding and installing them one by one every time just to run something
 - sometimes, a combination of plugins and presets or their versions just doesn't work
 - this is why nnode depends on them by the exact patch version
 
-Included with `nnode` are:
+#### Included with `nnode` are:
 - babel-preset-env
 - babel-preset-flow
 - babel-plugin-transform-object-rest-spread
