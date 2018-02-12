@@ -1,4 +1,4 @@
-var config = require('./config');
+var config = require('./config')();
 
 require('babel-register')({
   presets: config.presets,
