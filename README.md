@@ -48,14 +48,14 @@ Useful when running stuff with `pm2` or `nodemon`.
 - babel-plugin-flow-runtime (Only if environmental variable ENABLE_FLOW_RUNTIME is true)
 
 #### The `Transpilation` section:
-When `nnode` is called with `--out` flag, it goes into transpilation mode.
+When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
 
 This allows us to transpile a directory for older node (v.4.0) which is useful for npm publish.
 
 For example, this call:
 ```
-nnode src/**/*.js --out build
+nnode --transpile
 ```
-will transpile every .js file within the src directory to the `build` directory.
+will transpile every .js file within the `src` directory to the `build` directory.
 Build directory and all the subdirectories will be created if necessary.
 Generated code will be targeted for node version 4.0.

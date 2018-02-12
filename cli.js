@@ -13,11 +13,9 @@ if (arg === '-v' || arg === '--version') {
 
 process.argv.shift();
 
-var argv = require('minimist')(process.argv);
-if (argv.out) {
-  argv._.shift();
+if (arg === '--transpile') {
   const transpile = require('./transpile-directory');
-  transpile(argv._, argv.out);
+  transpile();
   process.exit(0);
 }
 
