@@ -26,16 +26,14 @@ function rimraf(dir_path) {
 
 module.exports = function() {
   var sourcePaths = glob.sync('src/**/*.js');
+  rimraf('build');
   sourcePaths.map(function(sourcePath) {
-    rimraf('build');
     var destPath = path.join('build', path.relative('src', sourcePath));
 
+    console.log(sourcePath, '~>', destPath);
     var code = babel.transformFileSync(sourcePath, config('4.0')).code;
 
-    //const absoluteDestinationPath = path.resolve(path.join(outputDir, sourcePath));
     mkdirp(path.dirname(destPath));
-
-    console.log(sourcePath, '~>', destPath);
     fs.writeFileSync(destPath, code, 'utf8');
   });
 };
