@@ -4,7 +4,8 @@ require('./index');
 
 var arg = process.argv[2];
 if (!arg) {
-  throw new Error('nnode should be called with a js file as an argument');
+  console.error('nnode should be called with a js file as an argument');
+  process.exit(-1);
 }
 if (arg === '-v' || arg === '--version') {
   console.log(require('./package.json').version);

@@ -52,10 +52,10 @@ When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
 
 This allows us to transpile a directory for older node (v.4.0) which is useful for npm publish.
 
-For example, this call:
+So, this call:
 ```
 nnode --transpile
 ```
-will transpile every .js file within the `src` directory to the `build` directory.
+will transpile every .js file within the `src` directory into the `build` directory.
 Build directory and all the subdirectories will be created if necessary.
 Generated code will be targeted for node version 4.0.
