@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 var path = require('path');
-
-require('.');
+require('./index');
 
 var arg = process.argv[2];
 if (!arg) {
@@ -9,16 +8,25 @@ if (!arg) {
 }
 if (arg === '-v' || arg === '--version') {
   console.log(require('./package.json').version);
-  return;
+  process.exit(0);
+}
+
+process.argv.shift();
+
+var argv = require('minimist')(process.argv);
+if (argv.out) {
+  argv._.shift();
+  const transpile = require('./transpile-directory');
+  transpile(argv._, argv.out);
+  process.exit(0);
 }
 
 try {
-  process.argv.shift();
   require(path.resolve(arg));
 } catch (e) {
   if (e.message === 'Cannot find module \'flow-runtime\'') {
     console.error('Missing flow-runtime. Run `npm install flow-runtime`');
-    return;
+    process.exit(-1);
   }
   throw e;
 }
