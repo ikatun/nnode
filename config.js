@@ -9,12 +9,13 @@ function getBabelConfiguration(nodeVersion) {
   var babelPluginTransformObjectRestSpread = [require('babel-plugin-transform-object-rest-spread')];
   var babelPluginDecorators = [require('babel-plugin-transform-decorators-legacy').default];
   var babelPluginFlowRuntime = [require('babel-plugin-flow-runtime').default];
+  var babelPluginImportGlob = [require('babel-plugin-import-glob')];
 
   var enableFlowRuntime = process.env.ENABLE_FLOW_RUNTIME;
 
   return {
     presets: [babelPresetEnv, babelPresetFlow],
-    plugins: [babelPluginDecorators, babelPluginTransformObjectRestSpread]
+    plugins: [babelPluginImportGlob, babelPluginDecorators, babelPluginTransformObjectRestSpread]
       .concat(enableFlowRuntime ? [babelPluginFlowRuntime] : [])
   }
 }
