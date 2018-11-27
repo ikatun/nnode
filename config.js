@@ -12,11 +12,13 @@ function getBabelConfiguration(nodeVersion) {
   var babelPluginImportGlob = [require('babel-plugin-import-glob')];
 
   var enableFlowRuntime = process.env.ENABLE_FLOW_RUNTIME;
+  var enableLocalBabelRc = process.env.ENABLE_LOCAL_BABEL_RC;
 
   return {
     presets: [babelPresetEnv, babelPresetFlow],
     plugins: [babelPluginImportGlob, babelPluginDecorators, babelPluginTransformObjectRestSpread]
-      .concat(enableFlowRuntime ? [babelPluginFlowRuntime] : [])
+      .concat(enableFlowRuntime ? [babelPluginFlowRuntime] : []),
+    babelrc: !!enableLocalBabelRc
   }
 }
 

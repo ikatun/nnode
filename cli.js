@@ -15,7 +15,7 @@ if (arg === '-v' || arg === '--version') {
 process.argv.shift();
 
 if (arg === '--transpile') {
-  const transpile = require('./transpile-directory');
+  var transpile = require('./transpile-directory');
   transpile();
   process.exit(0);
 }
