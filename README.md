@@ -51,7 +51,7 @@ Useful when running stuff with `pm2` or `nodemon`.
 #### The `Transpilation` section:
 When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
 
-This allows us to transpile a directory for older node (v.4.0) which is useful for npm publish.
+This allows us to transpile a directory for older node (v.6.0) which is useful for npm publish.
 
 So, this call:
 ```
