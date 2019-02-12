@@ -41,11 +41,12 @@ Useful when running stuff with `pm2` or `nodemon`.
 - this is why nnode depends on them by the exact patch version
 
 #### Included with `nnode` are:
-- babel-preset-env
-- babel-preset-flow
-- babel-plugin-transform-object-rest-spread
-- babel-plugin-transform-decorators-legacy
-- babel-plugin-flow-runtime (Only if environmental variable ENABLE_FLOW_RUNTIME is true)
+- @babel/core
+- @babel/preset-env
+- @babel/preset-flow
+- @babel/plugin-proposal-class-properties
+- @babel/plugin-proposal-decorators
+- @babel/register
 
 #### The `Transpilation` section:
 When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
@@ -58,4 +59,4 @@ nnode --transpile
 ```
 will transpile every .js file within the `src` directory into the `build` directory.
 Build directory and all the subdirectories will be created if necessary.
-Generated code will be targeted for node version 4.0.
+Generated code will be targeted for node version 6.0.

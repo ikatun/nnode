@@ -1,4 +1,4 @@
-require('babel-polyfill');
+require('@babel/polyfill');
 var config = require('./config')();
 
-require('babel-register')(config);
+require('@babel/register')(config);

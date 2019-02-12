@@ -1,23 +1,19 @@
 function getBabelConfiguration(nodeVersion) {
   var babelPresetEnv = [
-    require('babel-preset-env'),
+    require('@babel/preset-env').default,
     {
       targets: { node: nodeVersion || 'current' }
     }
   ];
-  var babelPresetFlow = [require('babel-preset-flow')];
-  var babelPluginTransformObjectRestSpread = [require('babel-plugin-transform-object-rest-spread')];
-  var babelPluginDecorators = [require('babel-plugin-transform-decorators-legacy').default];
-  var babelPluginFlowRuntime = [require('babel-plugin-flow-runtime').default];
-  var babelPluginImportGlob = [require('babel-plugin-import-glob')];
+  var babelPresetFlow = [require('@babel/preset-flow').default];
+  var babelPluginDecorators = [require('@babel/plugin-proposal-decorators').default, { legacy: true }];
+  var babelPluginProposalClassProperties = [require('@babel/plugin-proposal-class-properties').default, { loose: true }];
 
-  var enableFlowRuntime = process.env.ENABLE_FLOW_RUNTIME;
   var enableLocalBabelRc = process.env.ENABLE_LOCAL_BABEL_RC;
 
   return {
-    presets: [babelPresetEnv, babelPresetFlow],
-    plugins: [babelPluginImportGlob, babelPluginDecorators, babelPluginTransformObjectRestSpread]
-      .concat(enableFlowRuntime ? [babelPluginFlowRuntime] : []),
+    presets: [babelPresetFlow, babelPresetEnv],
+    plugins: [babelPluginDecorators, babelPluginProposalClassProperties],
     babelrc: !!enableLocalBabelRc
   }
 }

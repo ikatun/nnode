@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var glob = require('glob');
-var babel = require('babel-core');
+var babel = require('@babel/core');
 var config = require('./config');
 var mkdirp = require('./mkdirp');
 
@@ -31,7 +31,7 @@ module.exports = function() {
     var destPath = path.join('build', path.relative('src', sourcePath));
 
     console.log(sourcePath, '~>', destPath);
-    var code = babel.transformFileSync(sourcePath, config('4.0')).code;
+    var code = babel.transformFileSync(sourcePath, config('6.0')).code;
 
     mkdirp(path.dirname(destPath));
     fs.writeFileSync(destPath, code, 'utf8');
