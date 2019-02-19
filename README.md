@@ -6,17 +6,17 @@ So nice, you'd introduce it to your parents.
 It works just like `node`, only `n`icer.
 
 For using the `nnode` cli, install the package globally:
-```
+```bash
 npm install -g nnode
 ```
 
 When using the `nnode` package as `require('nnode')`, install the package as a dependency:
-```
+```bash
 npm install nnode --save
 ```
 
 `run-me.js`
-```
+```js
 import path from 'path';
 const x = { this: 'this', very: 'really' };
 const { very } = x;
@@ -55,7 +55,7 @@ When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
 This allows us to transpile a directory for older node (v.6.0) which is useful for npm publish.
 
 So, this call:
-```
+```bash
 nnode --transpile
 ```
 will transpile every .js file within the `src` directory into the `build` directory.
