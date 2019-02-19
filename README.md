@@ -1,7 +1,7 @@
 # nnode - a nicer node
 So nice, you'd introduce it to your parents.
 
-`nnode` executes .js files with node + babel.
+`nnode` executes .js and .ts files with node + babel.
 
 It works just like `node`, only `n`icer.
 
@@ -47,6 +47,7 @@ Useful when running stuff with `pm2` or `nodemon`.
 - @babel/plugin-proposal-class-properties
 - @babel/plugin-proposal-decorators
 - @babel/register
+- @babel/preset-typescript
 
 #### The `Transpilation` section:
 When `nnode` is called with `--transpile` flag, it goes into transpilation mode.
