@@ -24,14 +24,27 @@ function rimraf(dir_path) {
   }
 }
 
+function replaceExt(npath, ext) {
+  if (typeof npath !== 'string') {
+    return npath;
+  }
+
+  if (npath.length === 0) {
+    return npath;
+  }
+
+  var nFileName = path.basename(npath, path.extname(npath)) + ext;
+  return path.join(path.dirname(npath), nFileName);
+}
+
 module.exports = function() {
-  var sourcePaths = glob.sync('src/**/*.js');
+  var sourcePaths = glob.sync('src/**/*.@(js|jsx|ts|tsx|es6|es|mjs)');
   rimraf('build');
   sourcePaths.map(function(sourcePath) {
-    var destPath = path.join('build', path.relative('src', sourcePath));
+    var destPath = replaceExt(path.join('build', path.relative('src', sourcePath)), '.js');
 
     console.log(sourcePath, '~>', destPath);
-    var code = babel.transformFileSync(sourcePath, config('6.0')).code;
+    var code = babel.transformFileSync(sourcePath, config('6.0', sourcePath, true)).code;
 
     mkdirp(path.dirname(destPath));
     fs.writeFileSync(destPath, code, 'utf8');
