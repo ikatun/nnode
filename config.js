@@ -12,14 +12,13 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
     ]);
   }
 
-  if (language === 'js') {
-    presets.push([
-      require('@babel/preset-env').default,
-      {
-        targets: {node: nodeVersion || 'current'}
-      }
-    ]);
-  }
+  presets.push([
+    require('@babel/preset-env').default,
+    {
+      targets: {node: nodeVersion || 'current'}
+    }
+  ]);
+
   var babelPluginDecorators = [require('@babel/plugin-proposal-decorators').default, { legacy: true }];
   var babelPluginProposalClassProperties = [require('@babel/plugin-proposal-class-properties').default, { loose: true }];
 

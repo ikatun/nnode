@@ -1,3 +1,5 @@
+import { writeFileSync } from 'fs';
+
 function dec(...args) {
   console.log('decorator!');
 }
@@ -22,3 +24,5 @@ const obj2 = {a: 'a', c: 'c'};
 const obj3 = { ...obj1, ...obj2 };
 const { a } = obj3;
 console.log(a);
+
+console.log(writeFileSync);
