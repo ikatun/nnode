@@ -33,6 +33,7 @@ That's not very nice, try something nicer, like `nnode run-me.js`:
 
 You can also `require('nnode')` which works just like [require('babel-register')](https://babeljs.io/docs/usage/babel-register) without needing to setup .babelrc and installing babel presets, plugins and other non-niceties.
 Useful when running stuff with `pm2` or `nodemon`.
+If you're using typescript, you should `require('nnode/ts')` instead
 
 #### The `Why not babel-node` section:
 - babel-node requires babel presets, plugins and .babelrc file to be present in the local project
