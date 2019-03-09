@@ -22,6 +22,11 @@
     "@babel/preset-flow": "7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "7.0.0",
-    "glob": "*"
+    "babel-plugin-decorator-metadata-typescript": "^0.1.1",
+    "glob": "*",
+    "reflect-metadata": "0.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^11.11.0"
   }
 }

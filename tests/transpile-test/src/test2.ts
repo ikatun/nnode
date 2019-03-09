@@ -1,15 +1,37 @@
+import 'reflect-metadata';
+
 function dec() {
   console.log('decorator!');
 }
 
+function argDeco() {
+  console.log('decorator!');
+}
+
+function methodDecorator() {
+  console.log('methodDecorator!');
+}
+
+class Reference {
+
+}
+
+@dec
 class Test {
   @dec
-  x = 2;
+  x: number = 2;
 
   @dec
-  func() {
-    console.log('func');
+  y: number = 5;
+
+  method2(@argDeco { argument }: Reference) {
+    console.log('@dec argument: number');
   }
+  //
+  // @dec
+  // func() {
+  //   console.log('func');
+  // }
 }
 
 const x: Test = null;

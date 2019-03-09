@@ -19,14 +19,25 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
     }
   ]);
 
-  var babelPluginDecorators = [require('@babel/plugin-proposal-decorators').default, { legacy: true }];
-  var babelPluginProposalClassProperties = [require('@babel/plugin-proposal-class-properties').default, { loose: true }];
+  var plugins = [];
+
+  if (language === 'ts') {
+    require('reflect-metadata');
+    plugins.push([require('babel-plugin-decorator-metadata-typescript').default]);
+  }
+
+  plugins.push([require('./babel-plugin-type-annotations').default]);
+
+  plugins.push([require('@babel/plugin-proposal-decorators').default, { legacy: true }]);
+  plugins.push([require('@babel/plugin-proposal-class-properties').default, { loose: true }]);
+
+  plugins.push([require('./babel-plugin-parameter-decorator')]);
 
   var enableLocalBabelRc = process.env.ENABLE_LOCAL_BABEL_RC;
 
   var configuration = {
     presets: presets,
-    plugins: [babelPluginDecorators, babelPluginProposalClassProperties],
+    plugins: plugins,
     babelrc: !!enableLocalBabelRc,
     extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
   };
