@@ -8,6 +8,10 @@ function argDeco() {
   console.log('decorator!');
 }
 
+function argDeco2() {
+  console.log('decorator!');
+}
+
 function methodDecorator() {
   console.log('methodDecorator!');
 }
@@ -24,7 +28,7 @@ class Test {
   @dec
   y: number = 5;
 
-  method2(@argDeco { argument }: Reference) {
+  method2(@argDeco { argument }: Reference, @argDeco2 arg2: number) {
     console.log('@dec argument: number');
   }
   //

@@ -31,7 +31,7 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
   plugins.push([require('@babel/plugin-proposal-decorators').default, { legacy: true }]);
   plugins.push([require('@babel/plugin-proposal-class-properties').default, { loose: true }]);
 
-  plugins.push([require('./babel-plugin-parameter-decorator')]);
+  // plugins.push([require('./babel-plugin-parameter-decorator')]);
 
   var enableLocalBabelRc = process.env.ENABLE_LOCAL_BABEL_RC;
 

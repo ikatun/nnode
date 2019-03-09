@@ -20,14 +20,15 @@ exports.default = function (_ref) {
         classBody.forEach(function (bodyNode) {
           if (bodyNode.type === 'ClassMethod') {
             var name = bodyNode.key.name;
-            decorators = parameterDecorators(bodyNode.params, classRef);
+            decorators = parameterDecorators(bodyNode.params, classRef, name);
             types = parameterTypes(bodyNode.params, classRef, name);
           } else if (bodyNode.type === 'ClassProperty' && bodyNode.value === null && !bodyNode.static) {
             // Handle class property without initializer.
             // https://github.com/jeffmo/es-class-fields-and-static-properties
             bodyNode.value = t.memberExpression(t.thisExpression(), bodyNode.key);
           }
-          var additionalStatements = [].concat(_toConsumableArray(types)).filter(Boolean);
+
+          var additionalStatements = [].concat(_toConsumableArray(types), _toConsumableArray(decorators)).filter(Boolean);
 
           // If not found, do nothing.
           if (additionalStatements.length === 0) {
@@ -48,17 +49,17 @@ exports.default = function (_ref) {
   };
 
   // Returns an array of parameter decorator call statements for a class.
-  function parameterDecorators(params, classRef) {
+  function parameterDecorators(params, classRef, name) {
     var decoratorLists = params.map(function (param, i) {
       var decorators = param.decorators;
       if (!decorators) {
         return [];
       }
-      //param.decorators = null;
+      param.decorators = null;
 
       return decorators.map(function (decorator) {
         var call = decorator.expression;
-        var args = [classRef, t.identifier('null'), t.identifier(i.toString())];
+        var args = [classRef, t.identifier("'"+name+"'"), t.identifier(i.toString())];
         return t.expressionStatement(t.callExpression(call, args));
       });
     });
@@ -68,21 +69,20 @@ exports.default = function (_ref) {
 
   // Returns an array of define 'parameters' metadata statements for a class.
   // The array may contain zero or one statements.
-  function parameterTypes(params, classRef, methodName) {
+  function parameterTypes(params, classRef, name) {
     var types = params.map(function (param) {
       var annotation = param.typeAnnotation && param.typeAnnotation.typeAnnotation;
       return typeForAnnotation(annotation);
     });
-
     if (!types.some(Boolean)) {
       return [];
     }
-    return [defineMetadata('design:paramtypes', t.arrayExpression(types), classRef, methodName)];
+    return [defineMetadata('design:paramtypes', t.arrayExpression(types), classRef, name)];
   }
 
   // Returns an AST for define metadata statement.
-  function defineMetadata(key, value, target, methodName) {
-    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, target, t.stringLiteral(methodName)]));
+  function defineMetadata(key, value, target, name) {
+    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, target, t.stringLiteral(name)]));
   }
 
   function typeForAnnotation(annotation) {
@@ -106,7 +106,8 @@ exports.default = function (_ref) {
         }
         return annotation.id;
       case 'TSTypeReference':
-        return t.identifier('(typeof Reference === \'undefined\' ? undefined : Reference)');
+        var name = annotation.typeName.name;
+        return t.identifier('(typeof '+name+' === \'undefined\' ? undefined : '+name+')');
       case 'TSFunctionKeyword':
         return t.identifier('Function');
       default:
@@ -115,7 +116,7 @@ exports.default = function (_ref) {
   }
 };
 
-var _babelGenerator = require('@babel/generator');
+var _babelGenerator = require('babel-generator');
 
 var _babelGenerator2 = _interopRequireDefault(_babelGenerator);
 
