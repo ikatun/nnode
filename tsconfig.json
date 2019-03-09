@@ -15,8 +15,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedParameters": false,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
-  "files": ["nothing"],
-  "exclude": ["**/node_modules/*", "build", "webpack", "public", "typings", "@types"]
+  "exclude": ["node_modules/*", "build", "webpack", "public", "typings", "@types"]
 }

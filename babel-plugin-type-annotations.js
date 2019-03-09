@@ -21,7 +21,7 @@ exports.default = function (_ref) {
           if (bodyNode.type === 'ClassMethod') {
             var name = bodyNode.key.name;
             decorators = parameterDecorators(bodyNode.params, classRef, name);
-            types = parameterTypes(bodyNode.params, classRef, name);
+            types = bodyNode.params.decorators ? parameterTypes(bodyNode.params, classRef, name) : [];
           } else if (bodyNode.type === 'ClassProperty' && bodyNode.value === null && !bodyNode.static) {
             // Handle class property without initializer.
             // https://github.com/jeffmo/es-class-fields-and-static-properties
@@ -58,8 +58,9 @@ exports.default = function (_ref) {
       param.decorators = null;
 
       return decorators.map(function (decorator) {
+        var className = classRef.name;
         var call = decorator.expression;
-        var args = [classRef, t.identifier("'"+name+"'"), t.identifier(i.toString())];
+        var args = [t.identifier(className+'.prototype'), t.identifier("'"+name+"'"), t.identifier(i.toString())];
         return t.expressionStatement(t.callExpression(call, args));
       });
     });
@@ -82,7 +83,8 @@ exports.default = function (_ref) {
 
   // Returns an AST for define metadata statement.
   function defineMetadata(key, value, target, name) {
-    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, target, t.stringLiteral(name)]));
+    var targetName = target.name;
+    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, t.identifier(targetName+'.prototype'), t.stringLiteral(name)]));
   }
 
   function typeForAnnotation(annotation) {
@@ -106,12 +108,32 @@ exports.default = function (_ref) {
         }
         return annotation.id;
       case 'TSTypeReference':
-        var name = annotation.typeName.name;
-        return t.identifier('(typeof '+name+' === \'undefined\' ? undefined : '+name+')');
+        try {
+          var undefinedComparison = t.binaryExpression(
+            '===',
+            t.unaryExpression('typeof', annotation.typeName, true),
+            t.identifier('"undefined"')
+          );
+          return t.conditionalExpression(undefinedComparison,
+            t.identifier('undefined'),
+            annotation.typeName
+          );
+        } catch (e) {
+          console.log('e', annotation.typeName);
+          throw e;
+        }
       case 'TSFunctionKeyword':
         return t.identifier('Function');
+      case 'TSUnionType':
+        return typeForAnnotation(annotation.types[0]);
+      case 'TSLiteralType':
+        return typeForAnnotation(annotation.literal);
+      case 'StringLiteral':
+        return t.identifier('String');
+      case 'TSArrayType':
+        return t.identifier('undefined');
       default:
-        return null;
+        return t.identifier('undefined');
     }
   }
 };

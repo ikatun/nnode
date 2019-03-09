@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-function dec() {
+function classDeco() {
   console.log('decorator!');
 }
 
@@ -8,7 +8,7 @@ function argDeco() {
   console.log('decorator!');
 }
 
-function argDeco2() {
+const argDeco2 = () => () => {
   console.log('decorator!');
 }
 
@@ -20,7 +20,7 @@ class Reference {
 
 }
 
-@dec
+@classDeco
 class Test {
   @dec
   x: number = 2;
@@ -28,7 +28,7 @@ class Test {
   @dec
   y: number = 5;
 
-  method2(@argDeco { argument }: Reference, @argDeco2 arg2: number) {
+  method2(@argDeco2('filters', { nullable: true }) filters: Reference) {
     console.log('@dec argument: number');
   }
   //
@@ -40,3 +40,5 @@ class Test {
 
 const x: Test = null;
 new Test();
+
+console.log(Reflect.getMetadata("design:paramtypes", Test, 'method2'));
