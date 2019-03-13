@@ -21,7 +21,7 @@ exports.default = function (_ref) {
           if (bodyNode.type === 'ClassMethod') {
             var name = bodyNode.key.name;
             decorators = parameterDecorators(bodyNode.params, classRef, name);
-            types = bodyNode.params.decorators ? parameterTypes(bodyNode.params, classRef, name) : [];
+            types = decorators.length ? parameterTypes(bodyNode.params, classRef, name) : [];
           } else if (bodyNode.type === 'ClassProperty' && bodyNode.value === null && !bodyNode.static) {
             // Handle class property without initializer.
             // https://github.com/jeffmo/es-class-fields-and-static-properties
@@ -84,7 +84,7 @@ exports.default = function (_ref) {
   // Returns an AST for define metadata statement.
   function defineMetadata(key, value, target, name) {
     var targetName = target.name;
-    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, t.identifier(targetName+'.prototype'), t.stringLiteral(name)]));
+    return t.expressionStatement(t.callExpression(t.memberExpression(t.identifier('Reflect'), t.identifier('defineMetadata')), [t.stringLiteral(key), value, t.identifier(targetName), t.stringLiteral(name)]));
   }
 
   function typeForAnnotation(annotation) {
@@ -108,20 +108,16 @@ exports.default = function (_ref) {
         }
         return annotation.id;
       case 'TSTypeReference':
-        try {
-          var undefinedComparison = t.binaryExpression(
-            '===',
-            t.unaryExpression('typeof', annotation.typeName, true),
-            t.identifier('"undefined"')
-          );
-          return t.conditionalExpression(undefinedComparison,
-            t.identifier('undefined'),
-            annotation.typeName
-          );
-        } catch (e) {
-          console.log('e', annotation.typeName);
-          throw e;
-        }
+        var undefinedComparison = t.binaryExpression(
+          '===',
+          t.unaryExpression('typeof', annotation.typeName, true),
+          t.identifier('"undefined"')
+        );
+        return t.conditionalExpression(
+          undefinedComparison,
+          t.identifier('undefined'),
+          t.memberExpression(annotation.typeName, t.identifier('prototype'))
+        );
       case 'TSFunctionKeyword':
         return t.identifier('Function');
       case 'TSUnionType':

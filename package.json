@@ -10,7 +10,9 @@
     "nnode": "./cli.js"
   },
   "main": "./index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "nnode --transpile && (cd tests/deco && node ../../cli.js --transpile) && cat tests/deco/build/deco1.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
