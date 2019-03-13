@@ -7,10 +7,13 @@ import {
   Node,
   TraversalAncestors
 } from '@babel/types';
+import * as t from '@babel/types';
+
 import { NodePath } from '@babel/traverse';
 import { applyClassDecorators } from './apply-class-decorators';
 import { applyFieldDecorators } from './apply-field-decorators';
 import { applyParamDecoratorExpression, IParamDecorator } from './apply-param-decorator-expression';
+import { decoratingHelpersTemplate } from './decorating-helpers-template';
 
 function mapMergeAndEmpty<K, V>(ys: V[], xs: K[] | null | undefined, f: (K) => V): V[] {
   if (xs === null || xs === undefined) {
@@ -71,7 +74,7 @@ export default function() {
         const paramDecoratorExpressions: any[] = [];
 
         path.node.body.body.map(bodyElement => {
-          if ((bodyElement.type === 'ClassMethod' || bodyElement.type === 'ClassPrivateMethod') && bodyElement.decorators) {
+          if ((bodyElement.type === 'ClassMethod' || bodyElement.type === 'ClassPrivateMethod')) {
             const methodDecorators = mapMergeAndEmpty([], bodyElement.decorators, toMethodDecorator(classDeclaration, bodyElement));
 
             const paramDecorators: Array<IParamDecorator> = [];
@@ -92,15 +95,14 @@ export default function() {
           }
         });
 
-        if (classDecorators.length > 0) {
-          path.insertAfter(applyClassDecorators(classDecorators));
-        }
-        for (const fieldDecoratorExpression of fieldDecoratorExpressions) {
-          path.insertAfter(fieldDecoratorExpression);
-        }
-        for (const paramDecoratorExpression of paramDecoratorExpressions) {
-          path.insertAfter(paramDecoratorExpression);
-        }
+        path.insertBefore(t.identifier(decoratingHelpersTemplate));
+
+        const decoratorsExpressions = [
+          ...fieldDecoratorExpressions,
+          ...paramDecoratorExpressions,
+          ...(classDecorators.length > 0 ? [applyClassDecorators(classDecorators)] : []),
+        ];
+        path.insertAfter(decoratorsExpressions);
       },
       ClassExpression(path, state) {
       },

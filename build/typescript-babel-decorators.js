@@ -5,11 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _default;
 
+var t = _interopRequireWildcard(require("@babel/types"));
+
 var _applyClassDecorators = require("./apply-class-decorators");
 
 var _applyFieldDecorators = require("./apply-field-decorators");
 
 var _applyParamDecoratorExpression = require("./apply-param-decorator-expression");
+
+var _decoratingHelpersTemplate = require("./decorating-helpers-template");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function mapMergeAndEmpty(ys, xs, f) {
   if (xs === null || xs === undefined) {
@@ -65,7 +71,7 @@ function _default() {
         const fieldDecoratorExpressions = [];
         const paramDecoratorExpressions = [];
         path.node.body.body.map(bodyElement => {
-          if ((bodyElement.type === 'ClassMethod' || bodyElement.type === 'ClassPrivateMethod') && bodyElement.decorators) {
+          if (bodyElement.type === 'ClassMethod' || bodyElement.type === 'ClassPrivateMethod') {
             const methodDecorators = mapMergeAndEmpty([], bodyElement.decorators, toMethodDecorator(classDeclaration, bodyElement));
             const paramDecorators = [];
             bodyElement.params.map((param, index) => {
@@ -90,20 +96,17 @@ function _default() {
             }
           }
         });
-
-        if (classDecorators.length > 0) {
-          path.insertAfter((0, _applyClassDecorators.applyClassDecorators)(classDecorators));
-        }
-
-        for (var _i = 0; _i < fieldDecoratorExpressions.length; _i++) {
-          const fieldDecoratorExpression = fieldDecoratorExpressions[_i];
-          path.insertAfter(fieldDecoratorExpression);
-        }
-
-        for (var _i2 = 0; _i2 < paramDecoratorExpressions.length; _i2++) {
-          const paramDecoratorExpression = paramDecoratorExpressions[_i2];
-          path.insertAfter(paramDecoratorExpression);
-        }
+        path.insertBefore(t.identifier(_decoratingHelpersTemplate.decoratingHelpersTemplate));
+        const decoratorsExpressions = [...fieldDecoratorExpressions, ...paramDecoratorExpressions, ...(classDecorators.length > 0 ? [(0, _applyClassDecorators.applyClassDecorators)(classDecorators)] : [])];
+        path.insertAfter(decoratorsExpressions); // if (classDecorators.length > 0) {
+        //   path.insertAfter(applyClassDecorators(classDecorators));
+        // }
+        // for (const fieldDecoratorExpression of fieldDecoratorExpressions) {
+        //   path.insertAfter(fieldDecoratorExpression);
+        // }
+        // for (const paramDecoratorExpression of paramDecoratorExpressions) {
+        //   path.insertAfter(paramDecoratorExpression);
+        // }
       },
 
       ClassExpression(path, state) {},
