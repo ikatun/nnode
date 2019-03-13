@@ -4,8 +4,7 @@ import {
   ClassPrivateMethod,
   ClassProperty,
   Decorator, LVal,
-  Node,
-  TraversalAncestors
+  Program,
 } from '@babel/types';
 import * as t from '@babel/types';
 
@@ -56,19 +55,15 @@ export interface IArgDecorator extends IClassDecorator, IMethodDecorator {
   param: LVal;
 }
 
-const toArgsDecorator = (classDeclaration: ClassDeclaration, method: ClassMethod | ClassPrivateMethod, param: LVal) => (decorator: Decorator): IArgDecorator => {
-  return { classDeclaration, decorator, method, param };
-}
-
 export default function() {
+  let hadDecorators = false;
+
   return {
     visitor: {
       ClassDeclaration(path: NodePath<ClassDeclaration>) {
         const classDeclaration = path.node;
 
         const classDecorators = mapMergeAndEmpty([], path.node.decorators, toClassDecorator(classDeclaration));
-        const argsDecorators: IArgDecorator[] = [];
-        const fieldDecorators: IFieldDecorator[] = [];
 
         const fieldDecoratorExpressions: any[] = [];
         const paramDecoratorExpressions: any[] = [];
@@ -94,22 +89,23 @@ export default function() {
             }
           }
         });
-
-        path.insertBefore(t.identifier(decoratingHelpersTemplate));
-
         const decoratorsExpressions = [
           ...fieldDecoratorExpressions,
           ...paramDecoratorExpressions,
           ...(classDecorators.length > 0 ? [applyClassDecorators(classDecorators)] : []),
         ];
         path.insertAfter(decoratorsExpressions);
+        if (decoratorsExpressions.length > 0) {
+          hadDecorators = true;
+        }
       },
-      ClassExpression(path, state) {
-      },
-      ObjectExpression(path, state) {
-      },
-      AssignmentExpression(path, state) {
-      },
+      Program: {
+        exit(path: NodePath<Program>) {
+          if (hadDecorators) {
+            path.node.body.unshift(t.expressionStatement(t.identifier(decoratingHelpersTemplate)));
+          }
+        }
+      }
     },
   };
 };

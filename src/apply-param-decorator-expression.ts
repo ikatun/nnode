@@ -13,7 +13,7 @@ export interface IParamDecorator {
 
 const paramCall = (paramDecorator: IParamDecorator) =>
   t.callExpression(
-    t.identifier('param'),
+    t.identifier('akessrfljlrgqgd_param'),
     [t.numericLiteral(paramDecorator.index), paramDecorator.decorator.expression
     ]
   );
@@ -33,7 +33,7 @@ export function applyParamDecoratorExpression(methodDecorators: IMethodDecorator
     metadataCall('design:returntype', typeForAnnotation(method.returnType)),
   ]);
 
-  return t.callExpression(t.identifier('decorate'), [
+  return t.callExpression(t.identifier('akessrfljlrgqgd_decorate'), [
     paramCalls,
     t.memberExpression(classDeclaration.id!, t.identifier('prototype')),
     t.stringLiteral(method.key.name),

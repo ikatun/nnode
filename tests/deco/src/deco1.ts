@@ -1,4 +1,6 @@
-const classDeco = (...args) => {};
+const classDeco = (...args) => {
+  console.log('classDeco', classDeco.prototype);
+};
 const methodDeco = (...args) => {};
 const fieldDeco = (...args) => {};
 const argsDeco = (...args) => {};

@@ -1,5 +1,6 @@
 function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
   var language = entryPointPath.endsWith('.ts') || entryPointPath.endsWith('.tsx') ? 'ts' : 'js';
+  console.log('language', language);
 
   var presets = [];
   if (language === 'js') {
@@ -12,29 +13,26 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
     ]);
   }
 
-  // presets.push([
-  //   require('@babel/preset-env').default,
-  //   {
-  //     targets: {node: nodeVersion || 'current'}
-  //   }
-  // ]);
+  presets.push([
+    require('@babel/preset-env').default,
+    {
+      targets: {node: nodeVersion || 'current'}
+    }
+  ]);
 
   var plugins = [];
 
   if (language === 'ts') {
     require('reflect-metadata');
-    // plugins.push([require('babel-plugin-decorator-metadata-typescript').default])
+    plugins.push([require('@babel/plugin-syntax-decorators'), {legacy: true}]);
     plugins.push([require('./build/typescript-babel-decorators.js').default]);
   }
 
-  // plugins.push([require('./babel-plugin-type-annotations').default]);
+  if (language === 'js') {
+    plugins.push([require('@babel/plugin-proposal-decorators').default, { legacy: true }]);
+  }
 
-  //plugins.push([require('@babel/plugin-proposal-decorators').default, { legacy: true }]);
-  plugins.push([require('@babel/plugin-syntax-decorators'), { legacy: true }]);
-  // console.log(require('@babel/plugin-proposal-decorators').default, { legacy: true });
   plugins.push([require('@babel/plugin-proposal-class-properties').default, { loose: true }]);
-
-  // plugins.push([require('./babel-plugin-parameter-decorator')]);
 
   var enableLocalBabelRc = process.env.ENABLE_LOCAL_BABEL_RC;
 

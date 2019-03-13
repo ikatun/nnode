@@ -7,7 +7,7 @@ export function applyClassDecorators(decorators: IClassDecorator[]) {
     decorators.map(decorator => decorator.decorator.expression)
   );
   const className = decorators[0].classDeclaration.id!;
-  const decorateExpression = t.callExpression(t.identifier('decorate'), [args, className]);
+  const decorateExpression = t.callExpression(t.identifier('akessrfljlrgqgd_decorate'), [args, className]);
 
   return t.assignmentExpression('=', className, decorateExpression);
 }

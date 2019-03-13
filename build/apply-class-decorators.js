@@ -12,6 +12,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function applyClassDecorators(decorators) {
   const args = t.arrayExpression(decorators.map(decorator => decorator.decorator.expression));
   const className = decorators[0].classDeclaration.id;
-  const decorateExpression = t.callExpression(t.identifier('decorate'), [args, className]);
+  const decorateExpression = t.callExpression(t.identifier('akessrfljlrgqgd_decorate'), [args, className]);
   return t.assignmentExpression('=', className, decorateExpression);
 }

@@ -51,23 +51,13 @@ const toFieldDecorator = (classDeclaration, field) => decorator => {
   };
 };
 
-const toArgsDecorator = (classDeclaration, method, param) => decorator => {
-  return {
-    classDeclaration,
-    decorator,
-    method,
-    param
-  };
-};
-
 function _default() {
+  let hadDecorators = false;
   return {
     visitor: {
       ClassDeclaration(path) {
         const classDeclaration = path.node;
         const classDecorators = mapMergeAndEmpty([], path.node.decorators, toClassDecorator(classDeclaration));
-        const argsDecorators = [];
-        const fieldDecorators = [];
         const fieldDecoratorExpressions = [];
         const paramDecoratorExpressions = [];
         path.node.body.body.map(bodyElement => {
@@ -96,25 +86,22 @@ function _default() {
             }
           }
         });
-        path.insertBefore(t.identifier(_decoratingHelpersTemplate.decoratingHelpersTemplate));
         const decoratorsExpressions = [...fieldDecoratorExpressions, ...paramDecoratorExpressions, ...(classDecorators.length > 0 ? [(0, _applyClassDecorators.applyClassDecorators)(classDecorators)] : [])];
-        path.insertAfter(decoratorsExpressions); // if (classDecorators.length > 0) {
-        //   path.insertAfter(applyClassDecorators(classDecorators));
-        // }
-        // for (const fieldDecoratorExpression of fieldDecoratorExpressions) {
-        //   path.insertAfter(fieldDecoratorExpression);
-        // }
-        // for (const paramDecoratorExpression of paramDecoratorExpressions) {
-        //   path.insertAfter(paramDecoratorExpression);
-        // }
+        path.insertAfter(decoratorsExpressions);
+
+        if (decoratorsExpressions.length > 0) {
+          hadDecorators = true;
+        }
       },
 
-      ClassExpression(path, state) {},
+      Program: {
+        exit(path) {
+          if (hadDecorators) {
+            path.node.body.unshift(t.expressionStatement(t.identifier(_decoratingHelpersTemplate.decoratingHelpersTemplate)));
+          }
+        }
 
-      ObjectExpression(path, state) {},
-
-      AssignmentExpression(path, state) {}
-
+      }
     }
   };
 }

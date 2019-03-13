@@ -8,7 +8,7 @@ export function metadataCall(key: string, arg) {
     arg
   ];
 
-  return t.callExpression(t.identifier('metadata'), metadataCallArgs);
+  return t.callExpression(t.identifier('akessrfljlrgqgd_metadata'), metadataCallArgs);
 }
 
 export function applyFieldDecorators(decorators: IFieldDecorator[]) {
@@ -16,7 +16,7 @@ export function applyFieldDecorators(decorators: IFieldDecorator[]) {
     t.stringLiteral('design:type'),
     typeForAnnotation(decorators[0].field.typeAnnotation),
   ];
-  const metadataCall = t.callExpression(t.identifier('metadata'), metadataCallArgs);
+  const metadataCall = t.callExpression(t.identifier('akessrfljlrgqgd_metadata'), metadataCallArgs);
 
   const classPrototype = t.memberExpression(decorators[0].classDeclaration.id!, t.identifier('prototype'));
 
@@ -25,7 +25,7 @@ export function applyFieldDecorators(decorators: IFieldDecorator[]) {
     metadataCall,
   ]);
 
-  const decorateExpression = t.callExpression(t.identifier('decorate'), [
+  const decorateExpression = t.callExpression(t.identifier('akessrfljlrgqgd_decorate'), [
     args,
     classPrototype,
     t.stringLiteral(decorators[0].field.key.name),
