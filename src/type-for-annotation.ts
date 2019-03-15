@@ -2,6 +2,7 @@ import * as t from '@babel/types';
 import { TypeAnnotation } from '@babel/types';
 import { TSTypeAnnotation } from '@babel/types';
 import { Noop } from '@babel/types';
+import { type } from 'os';
 
 export function typeForAnnotation(annotation: TypeAnnotation | TSTypeAnnotation | Noop | null) {
   if (!annotation || annotation.type !== 'TSTypeAnnotation') {
@@ -30,15 +31,21 @@ export function typeForTSType(annotation: t.TSType) {
       }
       return t.identifier('Object');
     case 'TSTypeReference':
+      const typeName = annotation.typeName;
+      const typeNameCopy = JSON.parse(JSON.stringify(typeName));
+      if (annotation.typeName.name.includes('EntityID')) {
+        console.log('EntityID ~> Number');
+        t.identifier('Number');
+      }
       const undefinedComparison = t.binaryExpression(
         '===',
-        t.unaryExpression('typeof', annotation.typeName, true),
+        t.unaryExpression('typeof', typeName),
         t.identifier('"undefined"')
       );
       return t.conditionalExpression(
         undefinedComparison,
         t.identifier('Object'),
-        annotation.typeName
+        typeNameCopy
       );
     case 'TSFunctionType':
       return t.identifier('Function');
@@ -51,7 +58,6 @@ export function typeForTSType(annotation: t.TSType) {
     case 'TSTypeLiteral':
       return t.identifier('Object');
     default:
-      console.log('annotation.type', annotation.type);
       return t.identifier('undefined');
   }
 }

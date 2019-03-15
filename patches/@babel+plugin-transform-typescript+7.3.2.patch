@@ -1,0 +1,33 @@
+diff --git a/node_modules/@babel/plugin-transform-typescript/lib/index.js b/node_modules/@babel/plugin-transform-typescript/lib/index.js
+index df9a648..2624cd6 100644
+--- a/node_modules/@babel/plugin-transform-typescript/lib/index.js
++++ b/node_modules/@babel/plugin-transform-typescript/lib/index.js
+@@ -40,16 +40,18 @@ var _enum = _interopRequireDefault(require("./enum"));
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
+ function isInType(path) {
+-  switch (path.parent.type) {
+-    case "TSTypeReference":
+-    case "TSQualifiedName":
+-    case "TSExpressionWithTypeArguments":
+-    case "TSTypeQuery":
+-      return true;
+-
+-    default:
+-      return false;
+-  }
++  return false;
++  
++  // switch (path.parent.type) {
++  //   case "TSTypeReference":
++  //   case "TSQualifiedName":
++  //   case "TSExpressionWithTypeArguments":
++  //   case "TSTypeQuery":
++  //     return true;
++
++  //   default:
++  //     return false;
++  // }
+ }
+ 
+ const PARSED_PARAMS = new WeakSet();

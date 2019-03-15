@@ -1,6 +1,5 @@
 function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
   var language = entryPointPath.endsWith('.ts') || entryPointPath.endsWith('.tsx') ? 'ts' : 'js';
-  console.log('language', language);
 
   var presets = [];
   if (language === 'js') {
@@ -24,7 +23,7 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
 
   if (language === 'ts') {
     require('reflect-metadata');
-    plugins.push([require('@babel/plugin-syntax-decorators'), {legacy: true}]);
+    plugins.push([require('@babel/plugin-syntax-decorators').default, {legacy: true}]);
     plugins.push([require('./build/typescript-babel-decorators.js').default]);
   }
 

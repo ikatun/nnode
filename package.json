@@ -11,7 +11,8 @@
   },
   "main": "./index.js",
   "scripts": {
-    "test": "nnode --transpile && (cd tests/deco && node ../../cli.js --transpile) && cat tests/deco/build/deco1.js"
+    "test": "nnode --transpile && (cd tests/deco && node ../../cli.js --transpile) && cat tests/deco/build/deco1.js",
+    "postinstall": "patch-package"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "@babel/register": "7.0.0",
     "babel-plugin-decorator-metadata-typescript": "^0.1.1",
     "glob": "*",
+    "patch-package": "^6.0.5",
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {

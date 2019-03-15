@@ -1,5 +1,9 @@
 "use strict";
 
+var _reference = require("./reference");
+
+var _enum = require("./enum");
+
 
 var akessrfljlrgqgd_decorate = function (decorators, target, key, desc) {
   var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -18,7 +22,7 @@ var akessrfljlrgqgd_param = function (paramIndex, decorator) {
 ;
 
 const classDeco = (...args) => {
-  console.log('classDeco', classDeco.prototype);
+  console.log('classDeco', _enum.BuilderFormat);
 };
 
 const methodDeco = (...args) => {};
@@ -29,13 +33,12 @@ const argsDeco = (...args) => {};
 
 const argsDeco2 = (...args) => {};
 
-class Reference {}
-
 class TestClass {
   constructor() {
     this.field1 = void 0;
     this.field2 = void 0;
     this.field3 = void 0;
+    this.field4 = void 0;
   }
 
   method(arg) {}
@@ -46,7 +49,8 @@ class TestClass {
 
 akessrfljlrgqgd_decorate([fieldDeco, fieldDeco, akessrfljlrgqgd_metadata("design:type", Number)], TestClass.prototype, "field1", void 0)
 akessrfljlrgqgd_decorate([fieldDeco, fieldDeco, akessrfljlrgqgd_metadata("design:type", Object)], TestClass.prototype, "field2", void 0)
-akessrfljlrgqgd_decorate([fieldDeco, fieldDeco, akessrfljlrgqgd_metadata("design:type", typeof Reference === "undefined" ? Object : Reference)], TestClass.prototype, "field3", void 0)
+akessrfljlrgqgd_decorate([fieldDeco, akessrfljlrgqgd_metadata("design:type", typeof _enum.BuilderFormat === "undefined" ? Object : _enum.BuilderFormat)], TestClass.prototype, "field3", void 0)
+akessrfljlrgqgd_decorate([fieldDeco, fieldDeco, akessrfljlrgqgd_metadata("design:type", typeof _reference.Reference === "undefined" ? Object : _reference.Reference)], TestClass.prototype, "field4", void 0)
 akessrfljlrgqgd_decorate([methodDeco, methodDeco, akessrfljlrgqgd_param(0, argsDeco), akessrfljlrgqgd_metadata("design:type", Function), akessrfljlrgqgd_metadata("design:paramtypes", [String]), akessrfljlrgqgd_metadata("design:returntype", Number)], TestClass.prototype, "method", null)
-akessrfljlrgqgd_decorate([akessrfljlrgqgd_param(0, argsDeco), akessrfljlrgqgd_param(0, argsDeco2), akessrfljlrgqgd_param(1, argsDeco), akessrfljlrgqgd_metadata("design:type", Function), akessrfljlrgqgd_metadata("design:paramtypes", [Number, Object]), akessrfljlrgqgd_metadata("design:returntype", typeof Reference === "undefined" ? Object : Reference)], TestClass.prototype, "method2", null)
+akessrfljlrgqgd_decorate([akessrfljlrgqgd_param(0, argsDeco), akessrfljlrgqgd_param(0, argsDeco2), akessrfljlrgqgd_param(1, argsDeco), akessrfljlrgqgd_metadata("design:type", Function), akessrfljlrgqgd_metadata("design:paramtypes", [Number, Object]), akessrfljlrgqgd_metadata("design:returntype", typeof _reference.Reference === "undefined" ? Object : _reference.Reference)], TestClass.prototype, "method2", null)
 TestClass = akessrfljlrgqgd_decorate([classDeco, classDeco], TestClass)

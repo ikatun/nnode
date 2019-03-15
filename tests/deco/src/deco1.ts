@@ -1,12 +1,14 @@
+import { Reference } from './reference'
+import { BuilderFormat } from './enum';
+
 const classDeco = (...args) => {
-  console.log('classDeco', classDeco.prototype);
+  console.log('classDeco', BuilderFormat);
 };
 const methodDeco = (...args) => {};
 const fieldDeco = (...args) => {};
 const argsDeco = (...args) => {};
 const argsDeco2 = (...args) => {};
 
-class Reference {}
 
 @classDeco
 @classDeco
@@ -28,6 +30,9 @@ class TestClass {
   field2: { x: string; y: number };
 
   @fieldDeco
+  field3: BuilderFormat;
+
   @fieldDeco
-  field3: Reference;
+  @fieldDeco
+  field4: Reference;
 }

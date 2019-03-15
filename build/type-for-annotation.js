@@ -44,8 +44,15 @@ function typeForTSType(annotation) {
       return t.identifier('Object');
 
     case 'TSTypeReference':
-      const undefinedComparison = t.binaryExpression('===', t.unaryExpression('typeof', annotation.typeName, true), t.identifier('"undefined"'));
-      return t.conditionalExpression(undefinedComparison, t.identifier('Object'), annotation.typeName);
+      const typeName = annotation.typeName;
+      const typeNameCopy = JSON.parse(JSON.stringify(typeName));
+
+      if (annotation.typeName.name.includes('EntityID')) {
+        return t.identifier('Number');
+      }
+
+      const undefinedComparison = t.binaryExpression('===', t.unaryExpression('typeof', typeName), t.identifier('"undefined"'));
+      return t.conditionalExpression(undefinedComparison, t.identifier('Object'), typeNameCopy);
 
     case 'TSFunctionType':
       return t.identifier('Function');
@@ -63,7 +70,6 @@ function typeForTSType(annotation) {
       return t.identifier('Object');
 
     default:
-      console.log('annotation.type', annotation.type);
       return t.identifier('undefined');
   }
 }
