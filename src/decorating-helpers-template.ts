@@ -13,5 +13,28 @@ var akessrfljlrgqgd_metadata = function (k, v) {
 var akessrfljlrgqgd_param = function (paramIndex, decorator) {
   return function (target, key) { decorator(target, key, paramIndex); }
 };
+var akessrfljlrgqgd_determineType = function(t) {
+  if (t === undefined) {
+    return Object;
+  }
+  if (typeof t === 'function') {
+    return t;
+  }
+  if (typeof t === 'object') {
+    var values = Object.values(t);
+    if (!values.length) {
+    console.log('Undetermined enum', t);
+      return Object;
+    }
+    if (values.filter(function(value) { return typeof value === 'string'; }).length === values.length) {
+      return String;
+    }
+    if (values.filter(function(value) { return typeof value === 'number'; }).length === values.length) {
+      return Number;
+    }
+    console.log('Undetermined enum', t);
+    return Object;
+  }
+}
 `;
 

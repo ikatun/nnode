@@ -19,6 +19,29 @@ var akessrfljlrgqgd_metadata = function (k, v) {
 var akessrfljlrgqgd_param = function (paramIndex, decorator) {
   return function (target, key) { decorator(target, key, paramIndex); }
 };
+var akessrfljlrgqgd_determineType = function(t) {
+  if (t === undefined) {
+    return Object;
+  }
+  if (typeof t === 'function') {
+    return t;
+  }
+  if (typeof t === 'object') {
+    var values = Object.values(t);
+    if (!values.length) {
+    console.log('Undetermined enum', t);
+      return Object;
+    }
+    if (values.filter(function(value) { return typeof value === 'string'; }).length === values.length) {
+      return String;
+    }
+    if (values.filter(function(value) { return typeof value === 'number'; }).length === values.length) {
+      return Number;
+    }
+    console.log('Undetermined enum', t);
+    return Object;
+  }
+}
 ;
 let BuilderFormat;
 exports.BuilderFormat = BuilderFormat;
@@ -27,3 +50,16 @@ exports.BuilderFormat = BuilderFormat;
   BuilderFormat["A6"] = "A6";
   BuilderFormat["T1"] = "T1";
 })(BuilderFormat || (exports.BuilderFormat = BuilderFormat = {}));
+
+const deco = () => undefined;
+
+class TestClass {
+  constructor() {
+    this.field = void 0;
+  }
+
+}
+
+akessrfljlrgqgd_decorate([deco, akessrfljlrgqgd_metadata("design:type", akessrfljlrgqgd_determineType(typeof BuilderFormat === "undefined" ? undefined : BuilderFormat))], TestClass.prototype, "field", void 0)
+TestClass = akessrfljlrgqgd_decorate([deco], TestClass)
+console.log('enum', BuilderFormat, typeof BuilderFormat);

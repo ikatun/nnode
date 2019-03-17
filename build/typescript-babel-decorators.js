@@ -55,8 +55,9 @@ function _default() {
   let hadDecorators = false;
   return {
     visitor: {
-      ClassDeclaration(path) {
-        const classDeclaration = path.node;
+      ClassDeclaration(path, state) {
+        const classDeclaration = path.node; //console.log('path', state.file.opts.filename);
+
         const classDecorators = mapMergeAndEmpty([], path.node.decorators, toClassDecorator(classDeclaration));
         const fieldDecoratorExpressions = [];
         const paramDecoratorExpressions = [];

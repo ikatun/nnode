@@ -2,11 +2,10 @@ import * as t from '@babel/types';
 import { TypeAnnotation } from '@babel/types';
 import { TSTypeAnnotation } from '@babel/types';
 import { Noop } from '@babel/types';
-import { type } from 'os';
 
 export function typeForAnnotation(annotation: TypeAnnotation | TSTypeAnnotation | Noop | null) {
   if (!annotation || annotation.type !== 'TSTypeAnnotation') {
-    return t.tsUndefinedKeyword();
+    return t.identifier('"undefined"');
   }
 
   return typeForTSType(annotation.typeAnnotation);
@@ -33,26 +32,28 @@ export function typeForTSType(annotation: t.TSType) {
     case 'TSTypeReference':
       const typeName = annotation.typeName;
       const typeNameCopy = JSON.parse(JSON.stringify(typeName));
-      if (annotation.typeName.name.includes('EntityID')) {
-        console.log('EntityID ~> Number');
-        t.identifier('Number');
-      }
       const undefinedComparison = t.binaryExpression(
         '===',
         t.unaryExpression('typeof', typeName),
         t.identifier('"undefined"')
       );
-      return t.conditionalExpression(
-        undefinedComparison,
-        t.identifier('Object'),
-        typeNameCopy
-      );
+      const args = [t.conditionalExpression(undefinedComparison, t.identifier('undefined'), typeNameCopy)];
+      return t.callExpression(t.identifier('akessrfljlrgqgd_determineType'), args);
     case 'TSFunctionType':
       return t.identifier('Function');
     case 'TSUnionType':
       return typeForTSType(annotation.types[0]);
     case 'TSLiteralType':
-      return annotation.literal;
+      switch(annotation.literal.type) {
+        case 'BooleanLiteral':
+          return t.identifier('Boolean');
+        case 'NumericLiteral':
+          return t.identifier('Number');
+        case 'StringLiteral':
+          return t.identifier('String');
+        default:
+          return t.identifier('Object');
+      }
     case 'TSArrayType':
       return t.identifier('Array');
     case 'TSTypeLiteral':

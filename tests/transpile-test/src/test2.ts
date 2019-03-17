@@ -17,7 +17,6 @@ function methodDecorator() {
 }
 
 class Reference {
-
 }
 
 @classDeco
@@ -40,5 +39,3 @@ class Test {
 
 const x: Test = null;
 new Test();
-
-console.log(Reflect.getMetadata("design:paramtypes", Test, 'method2'));

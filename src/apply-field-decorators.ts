@@ -2,7 +2,7 @@ import { IFieldDecorator } from './typescript-babel-decorators';
 import * as t from '@babel/types';
 import { typeForAnnotation } from './type-for-annotation';
 
-export function metadataCall(key: string, arg) {
+export function metadataCall(key: string, arg: t.Expression | t.SpreadElement | t.JSXNamespacedName) {
   const metadataCallArgs = [
     t.stringLiteral(key),
     arg

@@ -12,7 +12,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function typeForAnnotation(annotation) {
   if (!annotation || annotation.type !== 'TSTypeAnnotation') {
-    return t.tsUndefinedKeyword();
+    return t.identifier('"undefined"');
   }
 
   return typeForTSType(annotation.typeAnnotation);
@@ -46,13 +46,9 @@ function typeForTSType(annotation) {
     case 'TSTypeReference':
       const typeName = annotation.typeName;
       const typeNameCopy = JSON.parse(JSON.stringify(typeName));
-
-      if (annotation.typeName.name.includes('EntityID')) {
-        return t.identifier('Number');
-      }
-
       const undefinedComparison = t.binaryExpression('===', t.unaryExpression('typeof', typeName), t.identifier('"undefined"'));
-      return t.conditionalExpression(undefinedComparison, t.identifier('Object'), typeNameCopy);
+      const args = [t.conditionalExpression(undefinedComparison, t.identifier('undefined'), typeNameCopy)];
+      return t.callExpression(t.identifier('akessrfljlrgqgd_determineType'), args);
 
     case 'TSFunctionType':
       return t.identifier('Function');
@@ -61,7 +57,19 @@ function typeForTSType(annotation) {
       return typeForTSType(annotation.types[0]);
 
     case 'TSLiteralType':
-      return annotation.literal;
+      switch (annotation.literal.type) {
+        case 'BooleanLiteral':
+          return t.identifier('Boolean');
+
+        case 'NumericLiteral':
+          return t.identifier('Number');
+
+        case 'StringLiteral':
+          return t.identifier('String');
+
+        default:
+          return t.identifier('Object');
+      }
 
     case 'TSArrayType':
       return t.identifier('Array');

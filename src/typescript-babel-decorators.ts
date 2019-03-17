@@ -60,8 +60,10 @@ export default function() {
 
   return {
     visitor: {
-      ClassDeclaration(path: NodePath<ClassDeclaration>) {
+      ClassDeclaration(path: NodePath<ClassDeclaration>, state) {
         const classDeclaration = path.node;
+        //console.log('path', state.file.opts.filename);
+
 
         const classDecorators = mapMergeAndEmpty([], path.node.decorators, toClassDecorator(classDeclaration));
 

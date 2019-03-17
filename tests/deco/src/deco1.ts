@@ -35,4 +35,7 @@ class TestClass {
   @fieldDeco
   @fieldDeco
   field4: Reference;
+
+  @fieldDeco
+  field5: 'A' | 'B' | 'C';
 }
