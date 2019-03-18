@@ -8,7 +8,7 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
 
   if (language === 'ts') {
     presets.push([
-      require('@babel/preset-typescript').default
+      require('./build/babel-preset-typescript').default
     ]);
   }
 

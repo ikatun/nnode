@@ -16,7 +16,8 @@
     "emitDecoratorMetadata": true,
     "noUnusedParameters": false,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules/*", "build", "webpack", "public", "typings", "@types"]
 }

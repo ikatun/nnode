@@ -11,23 +11,22 @@
   },
   "main": "./index.js",
   "scripts": {
-    "test": "nnode --transpile && (cd tests/deco && node ../../cli.js --transpile) && cat tests/deco/build/deco1.js",
-    "postinstall": "patch-package"
+    "test": "nnode --transpile && (cd tests/deco && node ../../cli.js --transpile) && cat tests/deco/build/deco1.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@babel/helper-plugin-utils": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "7.3.0",
     "@babel/plugin-proposal-decorators": "7.3.0",
+    "@babel/plugin-syntax-decorators": "^7.2.0",
+    "@babel/plugin-syntax-typescript": "^7.3.3",
     "@babel/polyfill": "7.2.5",
     "@babel/preset-env": "7.3.1",
     "@babel/preset-flow": "7.0.0",
-    "@babel/preset-typescript": "^7.3.3",
     "@babel/register": "7.0.0",
-    "babel-plugin-decorator-metadata-typescript": "^0.1.1",
     "glob": "*",
-    "patch-package": "^6.0.5",
     "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
