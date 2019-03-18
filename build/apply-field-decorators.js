@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.metadataCall = metadataCall;
 exports.applyFieldDecorators = applyFieldDecorators;
 
-var _typescriptBabelDecorators = require("./typescript-babel-decorators");
-
 var t = _interopRequireWildcard(require("@babel/types"));
 
 var _typeForAnnotation = require("./type-for-annotation");

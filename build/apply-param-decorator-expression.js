@@ -7,8 +7,6 @@ exports.applyParamDecoratorExpression = applyParamDecoratorExpression;
 
 var t = _interopRequireWildcard(require("@babel/types"));
 
-var _typescriptBabelDecorators = require("./typescript-babel-decorators");
-
 var _applyFieldDecorators = require("./apply-field-decorators");
 
 var _typeForAnnotation = require("./type-for-annotation");

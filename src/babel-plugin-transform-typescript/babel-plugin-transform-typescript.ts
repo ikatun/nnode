@@ -314,26 +314,27 @@ export default declare((api, { jsxPragma = "React" }) => {
   }
 
   function isImportTypeOnly(binding, programPath) {
-    for (const path of binding.referencePaths) {
-      if (!isInType(path)) {
-        return false;
-      }
-    }
-
-    if (binding.identifier.name !== jsxPragma) {
-      return true;
-    }
-
-    // "React" or the JSX pragma is referenced as a value if there are any JSX elements in the code.
-    let sourceFileHasJsx = false;
-    programPath.traverse({
-      JSXElement() {
-        sourceFileHasJsx = true;
-      },
-      JSXFragment() {
-        sourceFileHasJsx = true;
-      },
-    });
-    return !sourceFileHasJsx;
+    return false;
+    // for (const path of binding.referencePaths) {
+    //   if (!isInType(path)) {
+    //     return false;
+    //   }
+    // }
+    //
+    // if (binding.identifier.name !== jsxPragma) {
+    //   return true;
+    // }
+    //
+    // // "React" or the JSX pragma is referenced as a value if there are any JSX elements in the code.
+    // let sourceFileHasJsx = false;
+    // programPath.traverse({
+    //   JSXElement() {
+    //     sourceFileHasJsx = true;
+    //   },
+    //   JSXFragment() {
+    //     sourceFileHasJsx = true;
+    //   },
+    // });
+    // return !sourceFileHasJsx;
   }
 });

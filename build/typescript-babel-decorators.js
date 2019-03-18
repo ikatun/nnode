@@ -7,8 +7,6 @@ exports.default = _default;
 
 var t = _interopRequireWildcard(require("@babel/types"));
 
-var _traverse = require("@babel/traverse");
-
 var _applyClassDecorators = require("./apply-class-decorators");
 
 var _applyFieldDecorators = require("./apply-field-decorators");

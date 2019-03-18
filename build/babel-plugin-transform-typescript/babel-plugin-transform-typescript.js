@@ -385,50 +385,27 @@ var _default = (0, _helperPluginUtils.declare)((api, {
   }
 
   function isImportTypeOnly(binding, programPath) {
-    var _iteratorNormalCompletion5 = true;
-    var _didIteratorError5 = false;
-    var _iteratorError5 = undefined;
-
-    try {
-      for (var _iterator5 = binding.referencePaths[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-        const path = _step5.value;
-
-        if (!isInType(path)) {
-          return false;
-        }
-      }
-    } catch (err) {
-      _didIteratorError5 = true;
-      _iteratorError5 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
-          _iterator5.return();
-        }
-      } finally {
-        if (_didIteratorError5) {
-          throw _iteratorError5;
-        }
-      }
-    }
-
-    if (binding.identifier.name !== jsxPragma) {
-      return true;
-    } // "React" or the JSX pragma is referenced as a value if there are any JSX elements in the code.
-
-
-    let sourceFileHasJsx = false;
-    programPath.traverse({
-      JSXElement() {
-        sourceFileHasJsx = true;
-      },
-
-      JSXFragment() {
-        sourceFileHasJsx = true;
-      }
-
-    });
-    return !sourceFileHasJsx;
+    return false; // for (const path of binding.referencePaths) {
+    //   if (!isInType(path)) {
+    //     return false;
+    //   }
+    // }
+    //
+    // if (binding.identifier.name !== jsxPragma) {
+    //   return true;
+    // }
+    //
+    // // "React" or the JSX pragma is referenced as a value if there are any JSX elements in the code.
+    // let sourceFileHasJsx = false;
+    // programPath.traverse({
+    //   JSXElement() {
+    //     sourceFileHasJsx = true;
+    //   },
+    //   JSXFragment() {
+    //     sourceFileHasJsx = true;
+    //   },
+    // });
+    // return !sourceFileHasJsx;
   }
 });
 
