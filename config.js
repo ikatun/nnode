@@ -39,7 +39,8 @@ function getBabelConfiguration(nodeVersion, entryPointPath, omitExtensions) {
     presets: presets,
     plugins: plugins,
     babelrc: !!enableLocalBabelRc,
-    extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx']
+    extensions: ['.es6', '.es', '.jsx', '.js', '.mjs', '.ts', '.tsx'],
+    cache: false
   };
 
   if (omitExtensions) {
