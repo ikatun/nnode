@@ -24,6 +24,11 @@ if (arg === '--transpile') {
   process.exit(0);
 }
 
+if (arg === '--tsconfig') {
+  require('./create-tsconfig');
+  process.exit(0);
+}
+
 try {
   require(path.resolve(arg));
 } catch (e) {
